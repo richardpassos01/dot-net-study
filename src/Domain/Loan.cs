@@ -1,6 +1,6 @@
 using System;
 
-namespace src.Domain
+namespace src.Domain.Loan
 {
     public class Loan
     {

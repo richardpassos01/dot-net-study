@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using src.Domain;
+using src.Domain.Loan;
 
 namespace src.Application.Interfaces
 {

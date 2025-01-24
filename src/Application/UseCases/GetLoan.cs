@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using src.Application.Interfaces;
-using src.Domain;
+using src.Domain.Loan;
 
 namespace src.Application.UseCases
 {
