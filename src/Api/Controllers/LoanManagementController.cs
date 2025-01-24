@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using src.UseCases;
+using src.Application.UseCases;
 
 namespace src.Controllers
 {

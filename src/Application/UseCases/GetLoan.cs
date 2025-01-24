@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using src.Infrastructure.Adapters;
+using src.Application.Interfaces;
 using src.Domain;
 
-namespace src.UseCases
+namespace src.Application.UseCases
 {
     public class GetLoan
     {

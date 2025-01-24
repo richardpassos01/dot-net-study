@@ -2,9 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using dotenv.net;
+using src.Api.DependencyInjection;
 using System;
-using src.UseCases;
-using src.Infrastructure.Adapters;
 
 DotEnv.Load();
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
@@ -12,8 +11,7 @@ var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddScoped<GetLoan>();
-builder.Services.AddHttpClient<ILoanManagementAdapter, LoanManagementAdapter>();
+builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 

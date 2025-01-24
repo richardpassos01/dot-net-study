@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using src.Domain;
 
-namespace src.Infrastructure.Adapters
+namespace src.Application.Interfaces
 {
     public interface ILoanManagementAdapter
     {

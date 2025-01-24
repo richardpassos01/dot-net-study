@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using src.Domain;
 using System.Net.Http.Json;
 using src.Infrastructure.Adapters.Responses;
+using src.Application.Interfaces;
 
 namespace src.Infrastructure.Adapters
 {
