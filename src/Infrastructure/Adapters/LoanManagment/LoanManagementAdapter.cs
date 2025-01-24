@@ -5,8 +5,9 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using src.Domain;
 using System.Net.Http.Json;
-using src.Infrastructure.Adapters.Responses;
+using src.Infrastructure.Adapters.LoanManagment.Responses;
 using src.Application.Interfaces;
+using src.Infrastructure.Adapters.LoanManagment.Endpoints;
 
 namespace src.Infrastructure.Adapters
 {
@@ -18,13 +19,15 @@ namespace src.Infrastructure.Adapters
         {
             _httpClient = httpClient;
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var host = Environment.GetEnvironmentVariable("ADAPTER_HOST") ?? "http://localhost:3000";
+            _httpClient.BaseAddress = new Uri(host);
         }
 
         public async Task<Loan> GetLoanByApplicationId()
         {
             try
             {
-                var response = await _httpClient.GetAsync("http://localhost:3000/loans?loanId=1");
+                var response = await _httpClient.GetAsync(Endpoints.GET_LOAN.Replace(":applicationId", "1"));
                 response.EnsureSuccessStatusCode();
 
                 var loanDataList = await response.Content.ReadFromJsonAsync<List<LoanData>>();

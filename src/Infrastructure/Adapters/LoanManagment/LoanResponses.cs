@@ -1,6 +1,6 @@
 using System;
 
-namespace src.Infrastructure.Adapters.Responses
+namespace src.Infrastructure.Adapters.LoanManagment.Responses
 {
     public class LoanData
     {
