@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using src.Domain;
 using System.Net.Http.Json;
+using src.Infrastructure.Adapters.Responses;
 
 namespace src.Infrastructure.Adapters
 {
@@ -45,18 +46,6 @@ namespace src.Infrastructure.Adapters
                 Console.WriteLine(e);
                 throw;
             }
-        }
-
-        private class LoanData
-        {
-            public string Id { get; set; }
-            public int LoanId { get; set; }
-            public string State { get; set; }
-            public decimal ContractBalance { get; set; }
-            public decimal DiscountAmount { get; set; }
-            public decimal LoanAmount { get; set; }
-            public DateTime FundedDate { get; set; }
-            public decimal AmountDue { get; set; }
         }
     }
 }
