@@ -1,17 +1,27 @@
 using System;
+using System.Threading.Tasks;
+using src.Infrastructure.Adapters;
 using src.Domain;
 
 namespace src.UseCases
 {
-    public class GetLoan
+    public class GetLoan(LoanManagementAdapter loanManagementAdapter)
     {
-        public Loan Execute()
+        private readonly LoanManagementAdapter _loanManagementAdapter = loanManagementAdapter;
+
+        public async Task<Loan> Execute()
         {
-            return new Loan
+            try
             {
-                Id = Guid.NewGuid(),
-                CustomerName = "Richard"
-            };
+                var loan = await _loanManagementAdapter.GetLoanByApplicationId();
+
+                return loan;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null; 
+            }
         }
     }
 }

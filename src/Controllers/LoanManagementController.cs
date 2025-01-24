@@ -1,21 +1,25 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using src.UseCases;
 
-[ApiController]
-[Route("api/[controller]")]
-public class LoanManagementController : ControllerBase
+namespace src.Controllers
 {
-    private readonly GetLoan _getLoan;
-
-    public LoanManagementController(GetLoan getLoan)
+    [ApiController]
+    [Route("api/loan")]
+    public class LoanManagementController : ControllerBase
     {
-        _getLoan = getLoan;
-    }
+        private readonly GetLoan _getLoan;
 
-    [HttpGet]
-    public IActionResult GetLoan()
-    {
-        var loan = _getLoan.Execute();
-        return Ok(loan);
+        public LoanManagementController(GetLoan getLoan)
+        {
+            _getLoan = getLoan;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetLoan()
+        {
+            var loan = await _getLoan.Execute();
+            return Ok(loan);
+        }
     }
 }
