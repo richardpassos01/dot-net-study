@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "S/A7Cxxz0wE=",
+  "dgSpecHash": "ThS5A97lO/k=",
   "success": true,
-  "projectFilePath": "/home/richard/Documents/projects/HelloWorld/HelloWorld.csproj",
+  "projectFilePath": "/home/richard/Documents/projects/HelloWorld/LoanManagement.csproj",
   "expectedPackageFiles": [
     "/home/richard/.nuget/packages/dotenv.net/3.2.1/dotenv.net.3.2.1.nupkg.sha512"
   ],

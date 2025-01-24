@@ -41,9 +41,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/richard/Documents/projects/HelloWorld/HelloWorld.csproj",
-      "projectName": "HelloWorld",
-      "projectPath": "/home/richard/Documents/projects/HelloWorld/HelloWorld.csproj",
+      "projectUniqueName": "/home/richard/Documents/projects/HelloWorld/LoanManagement.csproj",
+      "projectName": "LoanManagement",
+      "projectPath": "/home/richard/Documents/projects/HelloWorld/LoanManagement.csproj",
       "packagesPath": "/home/richard/.nuget/packages/",
       "outputPath": "/home/richard/Documents/projects/HelloWorld/obj/",
       "projectStyle": "PackageReference",

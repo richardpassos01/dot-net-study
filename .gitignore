@@ -123,3 +123,5 @@ project.fragment.lock.json
 artifacts/
 
 .env
+bin
+obj
