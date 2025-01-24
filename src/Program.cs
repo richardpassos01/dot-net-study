@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<GetLoan>();
-builder.Services.AddHttpClient<LoanManagementAdapter>();
+builder.Services.AddHttpClient<ILoanManagementAdapter, LoanManagementAdapter>();
 
 var app = builder.Build();
 
@@ -26,7 +26,7 @@ app.UseRouting();
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapControllers();
+    _ = endpoints.MapControllers();
 });
 
 app.Run($"http://localhost:{port}");

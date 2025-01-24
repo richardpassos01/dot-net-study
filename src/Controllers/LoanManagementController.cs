@@ -6,14 +6,9 @@ namespace src.Controllers
 {
     [ApiController]
     [Route("api/loan")]
-    public class LoanManagementController : ControllerBase
+    public class LoanManagementController(GetLoan getLoan) : ControllerBase
     {
-        private readonly GetLoan _getLoan;
-
-        public LoanManagementController(GetLoan getLoan)
-        {
-            _getLoan = getLoan;
-        }
+        private readonly GetLoan _getLoan = getLoan;
 
         [HttpGet]
         public async Task<IActionResult> GetLoan()

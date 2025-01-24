@@ -122,3 +122,5 @@ artifacts/
 .env
 bin
 obj
+
+*.sln

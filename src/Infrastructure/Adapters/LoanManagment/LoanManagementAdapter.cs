@@ -9,7 +9,7 @@ using src.Infrastructure.Adapters.Responses;
 
 namespace src.Infrastructure.Adapters
 {
-    public class LoanManagementAdapter
+    public class LoanManagementAdapter : ILoanManagementAdapter
     {
         private readonly HttpClient _httpClient;
 
