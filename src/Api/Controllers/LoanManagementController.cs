@@ -24,11 +24,15 @@ namespace src.Api.Controllers
             return Ok(loan);
         }
 
-
-        [HttpPost("origination")]
-        public async Task<IActionResult> LoanOrigination()
+        [HttpPost("origination/{applicationId}")]
+        public async Task<IActionResult> LoanOrigination(string applicationId)
         {
-            await _loanOrigination.Execute();
+            if (!Request.Headers.TryGetValue("userId", out var userId))
+            {
+                return BadRequest("Missing userId header");
+            }
+
+            await _loanOrigination.Execute(applicationId, userId);
             return Ok();
         }
     }

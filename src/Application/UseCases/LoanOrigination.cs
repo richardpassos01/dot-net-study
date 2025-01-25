@@ -15,7 +15,7 @@ namespace src.Application.UseCases
             _loanManagementAdapter = loanManagementAdapter;
         }
 
-        public async Task Execute()
+        public async Task Execute(string applicationId, string userId)
         {
             try
             {
