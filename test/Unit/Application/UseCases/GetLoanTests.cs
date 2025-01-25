@@ -18,8 +18,6 @@ namespace tests.Unit.Application.UseCases
             mockLoanManagementAdapter.Setup(adapter => adapter.GetLoanByApplicationId())
                 .ReturnsAsync(new Loan
                 {
-                    Id = "807f",
-                    LoanId = 1,
                     IsActive = true,
                     Balance = 5000,
                     Discount = 200,
@@ -35,8 +33,6 @@ namespace tests.Unit.Application.UseCases
 
             // Assert
             Assert.NotNull(loan);
-            Assert.Equal("807f", loan.Id);
-            Assert.Equal(1, loan.LoanId);
             Assert.True(loan.IsActive);
             Assert.Equal(5000, loan.Balance);
             Assert.Equal(200, loan.Discount);

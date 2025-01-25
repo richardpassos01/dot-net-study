@@ -56,16 +56,16 @@ namespace src.Application.UseCases
             {
                 var offer = new Offer
                 {
-                    Id = "1234",
-                    paybackAmount = 1000,
-                    paymentTerms = 12
+                    Id = Guid.NewGuid(),
+                    PaybackAmount = 1000,
+                    PaymentTerms = 12
                 };
 
                 var application = new LoanApplication
                 {
-                     Id = "1234",
-                     userId = "1234",
-                     offer = offer
+                     Id = Guid.NewGuid(),
+                     UserId = Guid.NewGuid(),
+                     OfferId = offer.Id,
                 };
 
                 await _loanManagementAdapter.CreateInactiveLoan(application);
@@ -79,7 +79,7 @@ namespace src.Application.UseCases
 
         private async Task<bool> CheckFundEligibility()
         {
-            var userId = "1234";
+            var userId = Guid.NewGuid();
             var MAXIMUM_BALANCE_AMOUNT_TO_ENABLE_RENEWAL = 5;
 
             bool isFundEligible = true;

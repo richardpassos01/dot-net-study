@@ -44,8 +44,6 @@ namespace src.Infrastructure.Adapters
 
                 return new Loan
                 {
-                    Id = loanData.Id,
-                    LoanId = loanData.LoanId,
                     IsActive = loanData.State == "active",
                     Balance = loanData.ContractBalance,
                     Discount = loanData.DiscountAmount,
@@ -70,7 +68,8 @@ namespace src.Infrastructure.Adapters
                     Name = "John Doe",
                     Email = "john.doe@gmail.com",
                     Phone = "1234567890",
-                    Address = "1234 Main St"
+                    Address = "1234 Main St",
+                    UserId = Guid.NewGuid()
                 };
 
                 var response = await _httpClient.PostAsJsonAsync(Endpoints.CUSTOMERS, createCustomerData);
@@ -83,7 +82,7 @@ namespace src.Infrastructure.Adapters
             }
         }
 
-        public async Task<List<Loan>> ListActiveLoans(string userId)
+        public async Task<List<Loan>> ListActiveLoans(Guid userId)
         {
             try
             {
@@ -103,8 +102,6 @@ namespace src.Infrastructure.Adapters
 
                 var loans = customerData.LoanData.Select(loanData => new Loan
                 {
-                    Id = loanData.Id,
-                    LoanId = loanData.LoanId,
                     IsActive = loanData.State == "active",
                     Balance = loanData.ContractBalance,
                     Discount = loanData.DiscountAmount,
@@ -127,10 +124,10 @@ namespace src.Infrastructure.Adapters
             try
             {
                 var createLoanData = new CreateLoanData {
-                    UserId = application.userId,
+                    UserId = application.UserId,
                     ApplicationId = application.Id,
-                    LoanAmount = application.offer.paybackAmount,
-                    loanTerm = application.offer.paymentTerms,
+                    LoanAmount = application.Offer.PaybackAmount,
+                    loanTerm = application.Offer.PaymentTerms,
                 };
 
                 var response = await _httpClient.PostAsJsonAsync(Endpoints.LOANS, createLoanData);

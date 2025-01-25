@@ -4,8 +4,8 @@ namespace src.Domain
 {
     public class Offer
     {
-        public string Id { get; set; }
-        public decimal paybackAmount { get; set; }
-        public int paymentTerms { get; set; }
+        public Guid Id { get; set; }
+        public decimal PaybackAmount { get; set; }
+        public int PaymentTerms { get; set; }
     }
 }

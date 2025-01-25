@@ -4,8 +4,9 @@ namespace src.Domain
 {
     public class LoanApplication
     {
-        public string Id { get; set; }
-        public string userId { get; set; }
-        public Offer offer { get; set; }
+        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
+        public Guid OfferId { get; set; }
+        public Offer Offer { get; set; }
     }
 }

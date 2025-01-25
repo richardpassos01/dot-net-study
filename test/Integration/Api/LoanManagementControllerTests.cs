@@ -55,9 +55,7 @@ namespace tests.Integration.Api
             var loan = result?.Value as Loan;
 
             // Assert
-            Assert.NotNull(loan);
-            Assert.Equal("807f", loan.Id);
-            Assert.Equal(1, loan.LoanId);
+            Assert.NotNull(loan);;
             Assert.True(loan.IsActive);
             Assert.Equal(5000, loan.Balance);
             Assert.Equal(200, loan.Discount);
