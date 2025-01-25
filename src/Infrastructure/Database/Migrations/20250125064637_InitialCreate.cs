@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace LoanManagement.Migrations
+namespace LoanManagement.src.Infrastructure.Database.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -63,19 +63,19 @@ namespace LoanManagement.Migrations
                 columns: new[] { "Id", "FeatureName", "IsEnabled" },
                 values: new object[,]
                 {
-                    { new Guid("59bed3ea-1778-49d8-9219-fa86df345905"), "Feature1", true },
-                    { new Guid("e7a31985-3161-4b2f-9e56-8f30a1bc35bc"), "Feature2", false }
+                    { new Guid("2937df8f-adab-412f-92c0-a5109d65286c"), "Feature1", true },
+                    { new Guid("3856007a-dbd3-47e2-9510-788af89e37ad"), "Feature2", false }
                 });
 
             migrationBuilder.InsertData(
                 table: "Offers",
                 columns: new[] { "Id", "PaybackAmount", "PaymentTerms" },
-                values: new object[] { new Guid("9f36ad48-65e5-41d1-9f37-03a57ae89161"), 1000m, 12 });
+                values: new object[] { new Guid("6a025144-cdca-4268-8be5-0f2bea86e9aa"), 1000m, 12 });
 
             migrationBuilder.InsertData(
                 table: "Applications",
                 columns: new[] { "Id", "OfferId", "UserId" },
-                values: new object[] { new Guid("2b62a7bb-a376-4dc0-b11f-c5a7e42673f2"), new Guid("9f36ad48-65e5-41d1-9f37-03a57ae89161"), new Guid("57f1f59e-f2c5-4fe2-b24d-e585f05a2248") });
+                values: new object[] { new Guid("733d8ef9-da50-4bbc-9d0e-3cc307780117"), new Guid("6a025144-cdca-4268-8be5-0f2bea86e9aa"), new Guid("760ecc0e-2332-46de-8ce5-fdd10ce27bc8") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Applications_OfferId",

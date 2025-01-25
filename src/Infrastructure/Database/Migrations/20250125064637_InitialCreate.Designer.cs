@@ -8,10 +8,10 @@ using src.Infrastructure.Database;
 
 #nullable disable
 
-namespace LoanManagement.Migrations
+namespace LoanManagement.src.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(RelationalDbContext))]
-    [Migration("20250125063520_InitialCreate")]
+    [Migration("20250125064637_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -39,13 +39,13 @@ namespace LoanManagement.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("59bed3ea-1778-49d8-9219-fa86df345905"),
+                            Id = new Guid("2937df8f-adab-412f-92c0-a5109d65286c"),
                             FeatureName = "Feature1",
                             IsEnabled = true
                         },
                         new
                         {
-                            Id = new Guid("e7a31985-3161-4b2f-9e56-8f30a1bc35bc"),
+                            Id = new Guid("3856007a-dbd3-47e2-9510-788af89e37ad"),
                             FeatureName = "Feature2",
                             IsEnabled = false
                         });
@@ -72,9 +72,9 @@ namespace LoanManagement.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2b62a7bb-a376-4dc0-b11f-c5a7e42673f2"),
-                            OfferId = new Guid("9f36ad48-65e5-41d1-9f37-03a57ae89161"),
-                            UserId = new Guid("57f1f59e-f2c5-4fe2-b24d-e585f05a2248")
+                            Id = new Guid("733d8ef9-da50-4bbc-9d0e-3cc307780117"),
+                            OfferId = new Guid("6a025144-cdca-4268-8be5-0f2bea86e9aa"),
+                            UserId = new Guid("760ecc0e-2332-46de-8ce5-fdd10ce27bc8")
                         });
                 });
 
@@ -97,7 +97,7 @@ namespace LoanManagement.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("9f36ad48-65e5-41d1-9f37-03a57ae89161"),
+                            Id = new Guid("6a025144-cdca-4268-8be5-0f2bea86e9aa"),
                             PaybackAmount = 1000m,
                             PaymentTerms = 12
                         });

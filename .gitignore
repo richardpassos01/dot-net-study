@@ -124,3 +124,5 @@ bin
 obj
 
 *.sln
+
+*.db
