@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using src.Application.UseCases;
@@ -25,14 +26,24 @@ namespace src.Api.Controllers
         }
 
         [HttpPost("origination/{applicationId}")]
-        public async Task<IActionResult> LoanOrigination(string applicationId)
+          public async Task<IActionResult> LoanOrigination(string applicationId)
         {
             if (!Request.Headers.TryGetValue("userId", out var userId))
             {
                 return BadRequest("Missing userId header");
             }
 
-            await _loanOrigination.Execute(applicationId, userId);
+            if (!Guid.TryParse(applicationId, out var parsedApplicationId))
+            {
+                return BadRequest("Invalid applicationId format");
+            }
+
+            if (!Guid.TryParse(userId, out var parsedUserId))
+            {
+                return BadRequest("Invalid userId format");
+            }
+
+            await _loanOrigination.Execute(parsedApplicationId, parsedUserId);
             return Ok();
         }
     }

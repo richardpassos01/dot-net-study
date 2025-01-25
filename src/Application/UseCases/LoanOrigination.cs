@@ -3,32 +3,36 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using src.Application.Interfaces;
 using src.Domain;
+using src.Infrastructure.Repositories;
 
 namespace src.Application.UseCases
 {
     public class LoanOrigination
     {
         private readonly ILoanManagementAdapter _loanManagementAdapter;
+        private readonly LoanApplicationRepository _loanApplicationRepository;
 
-        public LoanOrigination(ILoanManagementAdapter loanManagementAdapter)
+        public LoanOrigination(ILoanManagementAdapter loanManagementAdapter, LoanApplicationRepository loanApplicationRepository)
         {
             _loanManagementAdapter = loanManagementAdapter;
+            _loanApplicationRepository = loanApplicationRepository;
         }
+        
 
-        public async Task Execute(string applicationId, string userId)
+        public async Task Execute(Guid ApplicationId, Guid UserId)
         {
             try
             {
                 await this.CreateCustomer();
 
-                bool isFundEligible = await this.CheckFundEligibility();
+                bool isFundEligible = await this.CheckFundEligibility(UserId);
 
                 if (!isFundEligible)
                 {
                     throw new Exception("The user has loans with open balance!");
                 }
 
-                await this.CreateInactiveLoan();
+                await this.CreateInactiveLoan(ApplicationId, UserId);
             }
             catch (Exception e)
             {
@@ -50,24 +54,12 @@ namespace src.Application.UseCases
             }
         }
 
-        private async Task CreateInactiveLoan()
+        private async Task CreateInactiveLoan(Guid ApplicationId, Guid UserId)
         {
             try
             {
-                var offer = new Offer
-                {
-                    Id = Guid.NewGuid(),
-                    PaybackAmount = 1000,
-                    PaymentTerms = 12
-                };
-
-                var application = new LoanApplication
-                {
-                     Id = Guid.NewGuid(),
-                     UserId = Guid.NewGuid(),
-                     OfferId = offer.Id,
-                };
-
+                var application = await _loanApplicationRepository.GetByIdAndUserId(ApplicationId, UserId);
+      
                 await _loanManagementAdapter.CreateInactiveLoan(application);
             }
             catch (Exception e)
@@ -77,14 +69,13 @@ namespace src.Application.UseCases
             }
         }
 
-        private async Task<bool> CheckFundEligibility()
+        private async Task<bool> CheckFundEligibility(Guid UserId)
         {
-            var userId = Guid.NewGuid();
             var MAXIMUM_BALANCE_AMOUNT_TO_ENABLE_RENEWAL = 5;
 
             bool isFundEligible = true;
 
-            List<Loan> loans = await _loanManagementAdapter.ListActiveLoans(userId);
+            List<Loan> loans = await _loanManagementAdapter.ListActiveLoans(UserId);
 
             foreach (var loan in loans)
             {
