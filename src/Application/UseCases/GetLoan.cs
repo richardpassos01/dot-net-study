@@ -3,29 +3,28 @@ using System.Threading.Tasks;
 using src.Application.Interfaces;
 using src.Domain;
 
-namespace src.Application.UseCases
+namespace src.Application.UseCases;
+
+public class GetLoan
 {
-    public class GetLoan
+    private readonly ILoanManagementAdapter _loanManagementAdapter;
+
+    public GetLoan(ILoanManagementAdapter loanManagementAdapter)
     {
-        private readonly ILoanManagementAdapter _loanManagementAdapter;
+        _loanManagementAdapter = loanManagementAdapter;
+    }
 
-        public GetLoan(ILoanManagementAdapter loanManagementAdapter)
+    public async Task<Loan> Execute()
+    {
+        try
         {
-            _loanManagementAdapter = loanManagementAdapter;
+            var loan = await _loanManagementAdapter.GetLoanByApplicationId();
+            return loan;
         }
-
-        public async Task<Loan> Execute()
+        catch (Exception e)
         {
-            try
-            {
-                var loan = await _loanManagementAdapter.GetLoanByApplicationId();
-                return loan;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return null; 
-            }
+            Console.WriteLine(e);
+            return null;
         }
     }
 }

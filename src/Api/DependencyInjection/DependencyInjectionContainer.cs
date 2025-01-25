@@ -4,19 +4,18 @@ using src.Application.UseCases;
 using src.Infrastructure.Adapters;
 using src.Infrastructure.Repositories;
 
-namespace src.Api.DependencyInjection
+namespace src.Api.DependencyInjection;
+
+public static class DependencyInjectionContainer
 {
-    public static class DependencyInjectionContainer
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
-        {
-            services.AddScoped<GetLoan>();
-            services.AddScoped<LoanOrigination>();
+        services.AddScoped<GetLoan>();
+        services.AddScoped<LoanOrigination>();
 
-            services.AddScoped<ILoanApplicationRepository, LoanApplicationRepository>();
+        services.AddScoped<ILoanApplicationRepository, LoanApplicationRepository>();
 
-            services.AddHttpClient<ILoanManagementAdapter, LoanManagementAdapter>();
-            return services;
-        }
+        services.AddHttpClient<ILoanManagementAdapter, LoanManagementAdapter>();
+        return services;
     }
 }

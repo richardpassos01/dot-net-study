@@ -12,132 +12,132 @@ using src.Infrastructure.Adapters.LoanManagment.Endpoints;
 using src.Infrastructure.Adapters.LoanManagment.Requests;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace src.Infrastructure.Adapters
+namespace src.Infrastructure.Adapters;
+
+public class LoanManagementAdapter : ILoanManagementAdapter
 {
-    public class LoanManagementAdapter : ILoanManagementAdapter
+    private readonly HttpClient _httpClient;
+
+    public LoanManagementAdapter(HttpClient httpClient)
     {
-        private readonly HttpClient _httpClient;
+        _httpClient = httpClient;
+        _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        var host = Environment.GetEnvironmentVariable("ADAPTER_HOST") ?? "http://localhost:3000";
+        _httpClient.BaseAddress = new Uri(host);
+    }
 
-        public LoanManagementAdapter(HttpClient httpClient)
+    public async Task<Loan> GetLoanByApplicationId()
+    {
+        try
         {
-            _httpClient = httpClient;
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var host = Environment.GetEnvironmentVariable("ADAPTER_HOST") ?? "http://localhost:3000";
-            _httpClient.BaseAddress = new Uri(host);
+            var queryParams = new Dictionary<string, string>
+            {
+                ["loanId"] = "1"
+            };
+            var uri = QueryHelpers.AddQueryString(Endpoints.LOANS, queryParams);
+
+            var response = await _httpClient.GetAsync(uri);
+            response.EnsureSuccessStatusCode();
+
+            var loanDataList = await response.Content.ReadFromJsonAsync<List<LoanData>>();
+            var loanData = loanDataList[0];
+
+            return new Loan
+            {
+                IsActive = loanData.State == "active",
+                Balance = loanData.ContractBalance,
+                Discount = loanData.DiscountAmount,
+                PaybackAmount = loanData.LoanAmount,
+                FundedDate = loanData.FundedDate,
+                PaymentDue = loanData.AmountDue
+            };
         }
-
-        public async Task<Loan> GetLoanByApplicationId()
+        catch (Exception e)
         {
-            try
-            {
-                var queryParams = new Dictionary<string, string>
-                {
-                    ["loanId"] = "1"
-                };
-                var uri = QueryHelpers.AddQueryString(Endpoints.LOANS, queryParams);
-
-                var response = await _httpClient.GetAsync(uri);
-                response.EnsureSuccessStatusCode();
-
-                var loanDataList = await response.Content.ReadFromJsonAsync<List<LoanData>>();
-                var loanData = loanDataList[0];
-
-                return new Loan
-                {
-                    IsActive = loanData.State == "active",
-                    Balance = loanData.ContractBalance,
-                    Discount = loanData.DiscountAmount,
-                    PaybackAmount = loanData.LoanAmount,
-                    FundedDate = loanData.FundedDate,
-                    PaymentDue = loanData.AmountDue
-                };
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            Console.WriteLine(e);
+            throw;
         }
+    }
 
-        public async Task CreateCustomer()
+    public async Task CreateCustomer()
+    {
+        try
         {
-            try
+            var createCustomerData = new CreateCustomerData
             {
-                var createCustomerData = new CreateCustomerData
-                {
-                    Name = "John Doe",
-                    Email = "john.doe@gmail.com",
-                    Phone = "1234567890",
-                    Address = "1234 Main St",
-                    UserId = Guid.NewGuid()
-                };
+                Name = "John Doe",
+                Email = "john.doe@gmail.com",
+                Phone = "1234567890",
+                Address = "1234 Main St",
+                UserId = Guid.NewGuid()
+            };
 
-                var response = await _httpClient.PostAsJsonAsync(Endpoints.CUSTOMERS, createCustomerData);
-                response.EnsureSuccessStatusCode();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            var response = await _httpClient.PostAsJsonAsync(Endpoints.CUSTOMERS, createCustomerData);
+            response.EnsureSuccessStatusCode();
         }
-
-        public async Task<List<Loan>> ListActiveLoans(Guid userId)
+        catch (Exception e)
         {
-            try
-            {
-                var queryParams = new Dictionary<string, string>
-                {
-                    ["loan_state"] = "active",
-                    ["select"] = "loanData"
-                };
-                var endpoint = $"{Endpoints.CUSTOMERS}-{userId}"; // @TODO: Fix this - should be /customers/{userId}
-                var uri = QueryHelpers.AddQueryString(endpoint, queryParams);
-
-                var response = await _httpClient.GetAsync(uri);
-                response.EnsureSuccessStatusCode();
-
-                var customerDataList = await response.Content.ReadFromJsonAsync<List<CustomerData>>();
-                var customerData = customerDataList?.FirstOrDefault();
-
-                var loans = customerData.LoanData.Select(loanData => new Loan
-                {
-                    IsActive = loanData.State == "active",
-                    Balance = loanData.ContractBalance,
-                    Discount = loanData.DiscountAmount,
-                    PaybackAmount = loanData.LoanAmount,
-                    FundedDate = loanData.FundedDate,
-                    PaymentDue = loanData.AmountDue
-                }).ToList();
-
-                return loans;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            Console.WriteLine(e);
+            throw;
         }
+    }
 
-        public async Task CreateInactiveLoan(LoanApplication application)
+    public async Task<List<Loan>> ListActiveLoans(Guid userId)
+    {
+        try
         {
-            try
+            var queryParams = new Dictionary<string, string>
             {
-                var createLoanData = new CreateLoanData {
-                    UserId = application.UserId,
-                    ApplicationId = application.Id,
-                    LoanAmount = application.Offer.PaybackAmount,
-                    loanTerm = application.Offer.PaymentTerms,
-                };
+                ["loan_state"] = "active",
+                ["select"] = "loanData"
+            };
+            var endpoint = $"{Endpoints.CUSTOMERS}-{userId}"; // @TODO: Fix this - should be /customers/{userId}
+            var uri = QueryHelpers.AddQueryString(endpoint, queryParams);
 
-                var response = await _httpClient.PostAsJsonAsync(Endpoints.LOANS, createLoanData);
-                response.EnsureSuccessStatusCode();
-            }
-            catch (Exception e)
+            var response = await _httpClient.GetAsync(uri);
+            response.EnsureSuccessStatusCode();
+
+            var customerDataList = await response.Content.ReadFromJsonAsync<List<CustomerData>>();
+            var customerData = customerDataList?.FirstOrDefault();
+
+            var loans = customerData.LoanData.Select(loanData => new Loan
             {
-                Console.WriteLine(e);
-                throw;
-            }
+                IsActive = loanData.State == "active",
+                Balance = loanData.ContractBalance,
+                Discount = loanData.DiscountAmount,
+                PaybackAmount = loanData.LoanAmount,
+                FundedDate = loanData.FundedDate,
+                PaymentDue = loanData.AmountDue
+            }).ToList();
+
+            return loans;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task CreateInactiveLoan(LoanApplication application)
+    {
+        try
+        {
+            var createLoanData = new CreateLoanData
+            {
+                UserId = application.UserId,
+                ApplicationId = application.Id,
+                LoanAmount = application.Offer.PaybackAmount,
+                loanTerm = application.Offer.PaymentTerms,
+            };
+
+            var response = await _httpClient.PostAsJsonAsync(Endpoints.LOANS, createLoanData);
+            response.EnsureSuccessStatusCode();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 }

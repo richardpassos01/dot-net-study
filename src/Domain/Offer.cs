@@ -1,11 +1,9 @@
 using System;
 
-namespace src.Domain
+namespace src.Domain;
+public class Offer
 {
-    public class Offer
-    {
-        public Guid Id { get; set; }
-        public decimal PaybackAmount { get; set; }
-        public int PaymentTerms { get; set; }
-    }
+    public Guid Id { get; set; }
+    public decimal PaybackAmount { get; set; }
+    public int PaymentTerms { get; set; }
 }

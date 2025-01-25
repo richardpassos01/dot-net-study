@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace src.Infrastructure.Adapters.LoanManagment.Responses
-{
+namespace src.Infrastructure.Adapters.LoanManagment.Responses;
+
 public class CustomerData
 {
     public string Id { get; set; }
@@ -24,6 +24,4 @@ public class LoanData
     public decimal LoanAmount { get; set; }
     public DateTime FundedDate { get; set; }
     public decimal AmountDue { get; set; }
-}
-
 }

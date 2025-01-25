@@ -1,9 +1,8 @@
-namespace src.Infrastructure.Adapters.LoanManagment.Endpoints
+namespace src.Infrastructure.Adapters.LoanManagment.Endpoints;
+
+public static class Endpoints
 {
-    public static class Endpoints
-    {
-        public const string LOANS = "/loans";
-        public const string CUSTOMERS = "/customers";
-    
-    }
+    public const string LOANS = "/loans";
+    public const string CUSTOMERS = "/customers";
+
 }

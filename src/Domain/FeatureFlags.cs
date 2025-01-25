@@ -1,11 +1,10 @@
 using System;
 
-namespace src.Domain
+namespace src.Domain;
+
+public class FeatureFlags
 {
-    public class FeatureFlags
-    {
-        public Guid Id { get; set; }
-        public string FeatureName { get; set; }
-        public bool IsEnabled { get; set; }
-    }
+    public Guid Id { get; set; }
+    public string FeatureName { get; set; }
+    public bool IsEnabled { get; set; }
 }
