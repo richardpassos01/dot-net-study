@@ -6,7 +6,7 @@ using Moq.Protected;
 using Xunit;
 using src.Api.Controllers;
 using src.Application.UseCases;
-using src.Domain.Loan;
+using src.Domain;
 using src.Infrastructure.Adapters;
 using src.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -47,7 +47,8 @@ namespace tests.Integration.Api
 
             var loanManagementAdapter = new LoanManagementAdapter(httpClient);
             var getLoan = new GetLoan(loanManagementAdapter);
-            var controller = new LoanManagementController(getLoan);
+            var loanOrigination = new LoanOrigination(loanManagementAdapter);
+            var controller = new LoanManagementController(getLoan, loanOrigination);
 
             // Act
             var result = await controller.GetLoan() as OkObjectResult;

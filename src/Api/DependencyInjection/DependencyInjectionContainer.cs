@@ -10,6 +10,7 @@ namespace src.Api.DependencyInjection
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<GetLoan>();
+            services.AddScoped<LoanOrigination>();
             services.AddHttpClient<ILoanManagementAdapter, LoanManagementAdapter>();
             return services;
         }

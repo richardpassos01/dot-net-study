@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Moq;
 using Xunit;
 using src.Application.UseCases;
-using src.Domain.Loan;
+using src.Domain;
 using src.Application.Interfaces;
 using System;
 

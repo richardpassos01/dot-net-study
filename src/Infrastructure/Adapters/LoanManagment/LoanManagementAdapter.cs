@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using src.Domain.Loan;
+using src.Domain;
 using System.Net.Http.Json;
 using src.Infrastructure.Adapters.LoanManagment.Responses;
 using src.Application.Interfaces;
 using src.Infrastructure.Adapters.LoanManagment.Endpoints;
+using src.Infrastructure.Adapters.LoanManagment.Requests;
 
 namespace src.Infrastructure.Adapters
 {
@@ -44,6 +45,28 @@ namespace src.Infrastructure.Adapters
                     FundedDate = loanData.FundedDate,
                     PaymentDue = loanData.AmountDue
                 };
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task CreateCustomer()
+        {
+            try
+            {
+                var createCustomerData = new CreateCustomerData
+                {
+                    Name = "John Doe",
+                    Email = "john.doe@gmail.com",
+                    Phone = "1234567890",
+                    Address = "1234 Main St"
+                };
+
+                var response = await _httpClient.PostAsJsonAsync(Endpoints.CREATE_CUSTOMER, createCustomerData);
+                response.EnsureSuccessStatusCode();
             }
             catch (Exception e)
             {
