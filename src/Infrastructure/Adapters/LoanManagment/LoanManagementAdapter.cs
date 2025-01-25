@@ -92,7 +92,7 @@ namespace src.Infrastructure.Adapters
                     ["loan_state"] = "active",
                     ["select"] = "loanData"
                 };
-                var endpoint = $"{Endpoints.CUSTOMERS}-{userId}";
+                var endpoint = $"{Endpoints.CUSTOMERS}-{userId}"; // @TODO: Fix this - should be /customers/{userId}
                 var uri = QueryHelpers.AddQueryString(endpoint, queryParams);
 
                 var response = await _httpClient.GetAsync(uri);
@@ -114,6 +114,27 @@ namespace src.Infrastructure.Adapters
                 }).ToList();
 
                 return loans;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task CreateInactiveLoan(LoanApplication application)
+        {
+            try
+            {
+                var createLoanData = new CreateLoanData {
+                    UserId = application.userId,
+                    ApplicationId = application.Id,
+                    LoanAmount = application.offer.paybackAmount,
+                    loanTerm = application.offer.paymentTerms,
+                };
+
+                var response = await _httpClient.PostAsJsonAsync(Endpoints.LOANS, createLoanData);
+                response.EnsureSuccessStatusCode();
             }
             catch (Exception e)
             {

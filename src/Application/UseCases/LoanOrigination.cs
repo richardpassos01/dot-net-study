@@ -28,7 +28,7 @@ namespace src.Application.UseCases
                     throw new Exception("The user has loans with open balance!");
                 }
 
-                // await this.CreateInactiveLoan();
+                await this.CreateInactiveLoan();
             }
             catch (Exception e)
             {
@@ -50,26 +50,32 @@ namespace src.Application.UseCases
             }
         }
 
-        // private async Task CreateInactiveLoan()
-        // {
-        //     try
-        //     {
-        //         var data = new {
-        //             userId = "1234",
-        //             applicationId = "1234",
-        //             loanAmount = 1000,
-        //             loanTerm = 12,
-        //             loanType = "personal"
-        //         };
+        private async Task CreateInactiveLoan()
+        {
+            try
+            {
+                var offer = new Offer
+                {
+                    Id = "1234",
+                    paybackAmount = 1000,
+                    paymentTerms = 12
+                };
 
-        //         await _loanManagementAdapter.CreateInactiveLoan(data);
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         Console.WriteLine(e);
-        //         throw;
-        //     }
-        // }
+                var application = new LoanApplication
+                {
+                     Id = "1234",
+                     userId = "1234",
+                     offer = offer
+                };
+
+                await _loanManagementAdapter.CreateInactiveLoan(application);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
 
         private async Task<bool> CheckFundEligibility()
         {
