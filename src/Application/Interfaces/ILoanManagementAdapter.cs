@@ -9,6 +9,6 @@ namespace src.Application.Interfaces
         Task<Loan> GetLoanByApplicationId();
         Task CreateCustomer();
         // Task CreateInactiveLoan(object data);
-        // Task<List<Loan>> ListActiveLoans(string userId);
+        Task<List<Loan>> ListActiveLoans(string userId);
     }
 }

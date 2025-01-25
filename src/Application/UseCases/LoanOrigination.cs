@@ -21,12 +21,12 @@ namespace src.Application.UseCases
             {
                 await this.CreateCustomer();
 
-                // bool isFundEligible = await this.CheckFundEligibility();
+                bool isFundEligible = await this.CheckFundEligibility();
 
-                // if (!isFundEligible)
-                // {
-                //     throw new Exception("The user has loans with open balance!");
-                // }
+                if (!isFundEligible)
+                {
+                    throw new Exception("The user has loans with open balance!");
+                }
 
                 // await this.CreateInactiveLoan();
             }
@@ -71,26 +71,26 @@ namespace src.Application.UseCases
         //     }
         // }
 
-        // private async Task<bool> CheckFundEligibility()
-        // {
-        //     var userId = "1234";
-        //     var MAXIMUM_BALANCE_AMOUNT_TO_ENABLE_RENEWAL = 5;
+        private async Task<bool> CheckFundEligibility()
+        {
+            var userId = "1234";
+            var MAXIMUM_BALANCE_AMOUNT_TO_ENABLE_RENEWAL = 5;
 
-        //     bool isFundEligible = true;
+            bool isFundEligible = true;
 
-        //     List<Loan> loans = await _loanManagementAdapter.ListActiveLoans(userId);
+            List<Loan> loans = await _loanManagementAdapter.ListActiveLoans(userId);
 
-        //     foreach (var loan in loans)
-        //     {
-        //         bool hasOpenBalance = loan.Balance > MAXIMUM_BALANCE_AMOUNT_TO_ENABLE_RENEWAL;
+            foreach (var loan in loans)
+            {
+                bool hasOpenBalance = loan.Balance > MAXIMUM_BALANCE_AMOUNT_TO_ENABLE_RENEWAL;
 
-        //         if (hasOpenBalance)
-        //         {
-        //             isFundEligible = false;
-        //         }
-        //     }
+                if (hasOpenBalance)
+                {
+                    isFundEligible = false;
+                }
+            }
 
-        //     return isFundEligible;
-        // }
+            return isFundEligible;
+        }
     }
 }
