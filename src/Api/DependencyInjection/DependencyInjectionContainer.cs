@@ -4,7 +4,6 @@ using src.Application.UseCases;
 using src.Infrastructure.Adapters;
 using src.Infrastructure.Repositories;
 
-
 namespace src.Api.DependencyInjection
 {
     public static class DependencyInjectionContainer
@@ -13,7 +12,8 @@ namespace src.Api.DependencyInjection
         {
             services.AddScoped<GetLoan>();
             services.AddScoped<LoanOrigination>();
-            services.AddScoped<LoanApplicationRepository>();
+
+            services.AddScoped<ILoanApplicationRepository, LoanApplicationRepository>();
 
             services.AddHttpClient<ILoanManagementAdapter, LoanManagementAdapter>();
             return services;

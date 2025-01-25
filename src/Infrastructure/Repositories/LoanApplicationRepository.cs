@@ -2,11 +2,12 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using src.Domain;
+using src.Application.Interfaces;
 using src.Infrastructure.Database;
 
 namespace src.Infrastructure.Repositories
 {
-    public class LoanApplicationRepository
+    public class LoanApplicationRepository : ILoanApplicationRepository
     {
         private readonly RelationalDbContext _context;
 

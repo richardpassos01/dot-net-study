@@ -10,14 +10,14 @@ namespace src.Application.UseCases
     public class LoanOrigination
     {
         private readonly ILoanManagementAdapter _loanManagementAdapter;
-        private readonly LoanApplicationRepository _loanApplicationRepository;
+        private readonly ILoanApplicationRepository _loanApplicationRepository;
 
-        public LoanOrigination(ILoanManagementAdapter loanManagementAdapter, LoanApplicationRepository loanApplicationRepository)
+        public LoanOrigination(ILoanManagementAdapter loanManagementAdapter, ILoanApplicationRepository loanApplicationRepository)
         {
             _loanManagementAdapter = loanManagementAdapter;
             _loanApplicationRepository = loanApplicationRepository;
         }
-        
+
 
         public async Task Execute(Guid ApplicationId, Guid UserId)
         {
